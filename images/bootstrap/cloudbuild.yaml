@@ -1,0 +1,10 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    dir: images/bootstrap
+    args:
+      - build
+      - -t
+      - eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap
+      - .
+images:
+  - eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap
