@@ -2,13 +2,6 @@
 
 FROM debian:11
 
-# Add commit details
-
-ARG commit
-ENV IMAGE_COMMIT=$commit
-LABEL io.kyma-project.test-infra.commit=$commit
-
-
 WORKDIR /workspace
 RUN mkdir -p /workspace
 ENV WORKSPACE=/workspace \
