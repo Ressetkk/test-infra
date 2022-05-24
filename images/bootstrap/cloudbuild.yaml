@@ -5,6 +5,6 @@ steps:
     entrypoint: bash
     args:
       - -c
-      - docker build --tag=eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA} .
+      - docker build --tag=$_IMAGE_NAME:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA} .
 images:
-  - eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap
+  - ${_IMAGE_NAME}
