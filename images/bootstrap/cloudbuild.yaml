@@ -2,9 +2,9 @@ steps:
   - id: build-image
     name: 'gcr.io/cloud-builders/docker'
     dir: images/bootstrap
+    entrypoint: bash
     args:
-      - build
-      - --tag=eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA}
-      - .
+      - -c
+      - docker build --tag=eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA} .
 images:
   - eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap
