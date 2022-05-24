@@ -1,12 +1,10 @@
 steps:
-  - name: 'gcr.io/cloud-builders/docker'
+  - id: build-image
+    name: 'gcr.io/cloud-builders/docker'
     dir: images/bootstrap
-#    env:
-#      - 'IMAGE_TAG=$_IMAGE_TAG'
     args:
       - build
-      - -t
-      - eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap:$_IMAGE_TAG
+      - --tag=eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA}
       - .
 images:
   - eu.gcr.io/sap-kyma-neighbors-dev/gcb/bootstrap
