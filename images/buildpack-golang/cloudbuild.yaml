@@ -1,15 +1,10 @@
 steps:
-#  - name: 'gcr.io/cloud-builders/docker'
-#    dir: images/bootstrap
-#    args:
-#      - build
-#      - -t
-#      - bootstrap
-  - name: 'gcr.io/cloud-builders/docker'
+  - id: build-image
+    name: 'gcr.io/cloud-builders/docker'
     dir: images/buildpack-golang
+    entrypoint: bash
     args:
-      - build
-      - -t
-      - eu.gcr.io/sap-kyma-neighbors-dev/gcb/buildpack-golang
+      - -c
+      - docker build --tag=$_IMAGE_NAME:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA} .
 images:
-  - eu.gcr.io/sap-kyma-neighbors-dev/gcb/buildpack-golang
+  - ${_IMAGE_NAME}
