@@ -1,0 +1,15 @@
+steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    dir: images/bootstrap
+    args:
+      - build
+      - -t
+      - bootstrap
+  - name: 'gcr.io/cloud-builders/docker'
+    dir: images/buildpack-golang
+    args:
+      - build
+      - -t
+      - eu.gcr.io/sap-kyma-neighbors-dev/gcb/buildpack-golang
+images:
+  - eu.gcr.io/sap-kyma-neighbors-dev/gcb/buildpack-golang

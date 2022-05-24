@@ -1,6 +1,6 @@
 # Basic golang buildpack
 
-FROM eu.gcr.io/kyma-project/test-infra/bootstrap:v20220427-9543160d
+FROM golang:1.18.2
 
 # Commit details
 
@@ -11,7 +11,6 @@ LABEL io.kyma-project.test-infra.commit=$commit
 # Versions
 
 ENV ARCH amd64
-ENV GO_VERSION 1.18
 ENV DEP_RELEASE_TAG v0.5.4
 ENV KUBEBUILDER_VERSION 2.3.2
 ENV KUSTOMIZE_VERSION 3.8.4
@@ -27,18 +26,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
         libgit2-dev \
         && apt-get clean \
         && rm -rf /var/lib/apt/lists/*
-
-# Install Go and Dep
-ENV GOPATH /workspace/go
-ENV PATH $GOPATH/bin:/usr/local/go/bin:$PATH
-
-RUN curl -fLSs -o go.tar.gz "https://dl.google.com/go/go${GO_VERSION}.linux-${ARCH}.tar.gz" && \
-    tar xzf go.tar.gz && \
-    rm go.tar.gz && \
-    mv go /usr/local && \
-    mkdir -p "${GOPATH}/bin" && \
-    mkdir -p "${GOPATH}/src" && \
-    curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
 # Install kubebuilder
 ENV PATH /usr/local/kubebuilder/bin:$PATH
@@ -67,9 +54,3 @@ RUN go install golang.org/x/tools/cmd/goimports@latest && \
 
 COPY ./license-puller.sh /license-puller.sh
 ENV LICENSE_PULLER_PATH=/license-puller.sh
-
-# Prow Tools
-# hadolint ignore=DL3022
-COPY --from=eu.gcr.io/kyma-project/test-infra/prow-tools:v20210804-d55639f9 /prow-tools /prow-tools
-# for better access to prow-tools
-ENV PATH=$PATH:/prow-tools
