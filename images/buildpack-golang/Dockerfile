@@ -11,10 +11,8 @@ LABEL io.kyma-project.test-infra.commit=$commit
 # Versions
 
 ENV ARCH amd64
-ENV DEP_RELEASE_TAG v0.5.4
 ENV KUBEBUILDER_VERSION 2.3.2
 ENV KUSTOMIZE_VERSION 3.8.4
-ENV GOLANGCI_LINT_VERSION v1.45.2
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
@@ -40,17 +38,6 @@ RUN curl -fLSs -o kubebuilder.tar.gz "https://github.com/kubernetes-sigs/kubebui
     tar -zxvf kustomize.tar.gz && \
     rm kustomize.tar.gz && \
     mv kustomize /usr/local/bin/kustomize
-
-# Install golang toolbox
-RUN go install golang.org/x/tools/cmd/goimports@latest && \
-    go install golang.org/x/lint/golint@latest && \
-    go install github.com/ericchiang/pup@latest && \
-    go install github.com/kisielk/errcheck@latest && \
-    go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@v1.8.2 && \
-    go install golang.org/x/perf/cmd/benchstat@latest && \
-    go install github.com/vektra/mockery/v2@latest && \
-    go install github.com/maxbrunsfeld/counterfeiter/v6@latest && \
-    curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | bash -s -- -b ${GOPATH}/bin ${GOLANGCI_LINT_VERSION}
 
 COPY ./license-puller.sh /license-puller.sh
 ENV LICENSE_PULLER_PATH=/license-puller.sh
