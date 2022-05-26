@@ -1,0 +1,18 @@
+steps:
+  - id: bootstrap
+    name: 'gcr.io/cloud-builders/docker'
+    dir: images/bootstrap
+    entrypoint: bash
+    args:
+      - -c
+      - docker build --tag=$_IMAGE_REPO/$BUILD_ID:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA}-single .
+  - id: buildpack-golang
+    name: 'gcr.io/cloud-builders/docker'
+    dir: images/buildpack-golang
+    entrypoint: bash
+    args:
+      - -c
+      - docker build --tag=$_IMAGE_REPO/$BUILD_ID:${_PR:-$(date +v%Y%m%d)-$SHORT_SHA}-single .
+images:
+  - ${_IMAGE_REPO}/bootstrap
+  - ${_IMAGE_REPO}/buildpack-golang
