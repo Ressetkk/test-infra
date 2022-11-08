@@ -1,0 +1,3 @@
+- ko://github.com/kyma-project/test-infra/development/image-syncer
+- ko://github.com/kyma-project/test-infra/development/external-plugins/cla-assistant
+- ko://github.com/kyma-project/test-infra/development/external-plugins/needs-tws

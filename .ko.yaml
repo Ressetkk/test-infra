@@ -1,0 +1,13 @@
+defaultBaseImage: gcr.io/distroless/static:nonroot
+builds:
+  - id: cla-assistant
+    dir: .
+    main: ./development/external-plugins/cla-assistant
+    ldflags:
+      - -s -w
+#      - -X main.version={{.Env.VERSION}}
+  - id: image-syncer
+    dir: .
+    main: ./development/image-syncer
+    ldflags:
+      - -s -w
